@@ -1,5 +1,54 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
-  "features": {
-  }
+  "name": "Blockchain DApp Development",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "backend", // Varsayılan hizmet
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "editor.formatOnSave": true
+      },
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "ms-python.python",
+        "JuanBlanco.solidity",
+        "eamodio.gitlens",
+        "ms-azuretools.vscode-docker",
+        "hashicorp.terraform"
+      ],
+      "forwardPorts": [
+        3000,
+        5001,
+        8000,
+        8081,
+        8545
+      ],
+      "portsAttributes": {
+        "3000": {
+          "label": "Backend",
+          "onAutoForward": "openPreview"
+        },
+        "5001": {
+          "label": "IPFS",
+          "onAutoForward": "ignore"
+        },
+        "8000": {
+          "label": "Blockchain",
+          "onAutoForward": "openPreview"
+        },        
+        "8081": {
+          "label": "Frontend", 
+          "onAutoForward": "openPreview"
+        },
+        "8545": {
+          "label": "Ethereum", 
+          "onAutoForward": "openPreview"
+        }
+      }
+    }
+  },
+  "postCreateCommand": "npm install && pip install -r requirements.txt", // Gerekli modülleri yükler
+  "remoteUser": "vscode"
 }

@@ -1,0 +1,17 @@
+{
+  "name": "blockchain-dapp-backend",
+  "version": "0.0.1",
+  "description": "DApp backend for blockchain project",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "web3": "^1.5.2",
+    "cors": "^2.8.5",
+    "ipfs-http-client": "^52.0.1",
+    "level": "^6.0.1",
+    "dotenv": "^16.4.5" 
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}

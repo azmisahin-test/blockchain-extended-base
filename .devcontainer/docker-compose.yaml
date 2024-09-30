@@ -1,0 +1,64 @@
+# .devcontainer/docker-compose.yaml
+version: '3.8'
+
+services:
+  blockchain:
+    build:
+      context: ./logic
+    command: python3 main.py
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./blockchain:/usr/src/app
+    depends_on:
+      - ipfs
+      - leveldb
+
+  backend:
+    build:
+      context: ./dapps/backend
+    command: node server.js
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./dapps/backend:/usr/src/app
+    depends_on:
+      - blockchain
+      - ipfs
+
+  frontend:
+    build:
+      context: ./dapps/frontend
+    command: npx http-server -p 3001    
+    ports:
+      - "8081:3001"
+    volumes:
+      - ./dapps/frontend:/usr/src/app
+
+  solidity:
+    image: ethereum/solc
+    volumes:
+      - ./smart_contracts:/contracts
+    command: solc --bin --abi --optimize --overwrite -o ./build ./contracts/*.sol
+
+  ipfs:
+    image: ipfs/go-ipfs:latest
+    ports:
+      - "5001:5001"
+      - "8080:8080"
+    volumes:
+      - ./storage/ipfs:/data/ipfs
+
+  leveldb:
+    image: marcelmaatkamp/leveldb
+    volumes:
+      - ./storage/leveldb:/data/leveldb
+
+  ethereum:
+    image: ethereum/client-go
+    container_name: ethereum_node
+    ports:
+      - "8545:8545"
+    command: --rpc --rpcaddr "0.0.0.0" --rpcapi "eth,web3,personal" --networkid 1234 --nodiscover --mine --miner.threads=1
+    volumes:
+      - ./ethereum_data:/root/.ethereum
