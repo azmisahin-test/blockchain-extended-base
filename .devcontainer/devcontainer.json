@@ -1,8 +1,8 @@
 {
   "name": "Blockchain DApp Development",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "backend", // Varsayılan hizmet
-  "workspaceFolder": "/workspace",
+  "dockerComposeFile": "docker-compose.yaml",
+  "service": "backend",
+  "workspaceFolder": "/workspaces",
   "customizations": {
     "vscode": {
       "settings": {
@@ -37,18 +37,18 @@
         "8000": {
           "label": "Blockchain",
           "onAutoForward": "openPreview"
-        },        
+        },
         "8081": {
-          "label": "Frontend", 
+          "label": "Frontend",
           "onAutoForward": "openPreview"
         },
         "8545": {
-          "label": "Ethereum", 
+          "label": "Ethereum",
           "onAutoForward": "openPreview"
         }
       }
     }
   },
-  "postCreateCommand": "npm install && pip install -r requirements.txt", // Gerekli modülleri yükler
+  "postCreateCommand": "npm install && pip install -r requirements.txt",
   "remoteUser": "vscode"
 }
